@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ganeshab Mobies | Store</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Ganeshab Mobies</h1>
+      <p>Mobiles, accessories, and trusted service.</p>
+    </div>
+    <button id="adminToggle" class="secondary-btn">Admin Panel</button>
+  </header>
+
+  <main>
+    <section class="catalog-section">
+      <div class="section-title-row">
+        <h2>Shop Products</h2>
+        <input id="searchInput" type="search" placeholder="Search products..." />
+      </div>
+      <div id="productGrid" class="product-grid"></div>
+    </section>
+
+    <aside class="cart-section">
+      <h2>Cart</h2>
+      <ul id="cartItems" class="cart-items"></ul>
+      <p class="total">Total: ₹<span id="cartTotal">0</span></p>
+
+      <h3>Checkout</h3>
+      <form id="checkoutForm" class="checkout-form">
+        <input name="customerName" placeholder="Full name" required />
+        <input name="email" type="email" placeholder="Email" required />
+        <input name="phone" placeholder="Phone" required />
+        <textarea name="address" placeholder="Delivery address" required></textarea>
+        <select name="paymentMethod" required>
+          <option value="">Payment method</option>
+          <option value="COD">Cash on Delivery</option>
+          <option value="UPI">UPI</option>
+          <option value="Card">Card</option>
+        </select>
+        <button type="submit" class="primary-btn">Place Order</button>
+      </form>
+      <p id="checkoutMessage" class="message"></p>
+    </aside>
+  </main>
+
+  <section id="adminPanel" class="admin-panel hidden">
+    <h2>Admin - Manage Products</h2>
+    <form id="productForm" class="admin-form">
+      <input name="name" placeholder="Product name" required />
+      <input name="price" type="number" min="1" placeholder="Price" required />
+      <input name="image" placeholder="Image URL" required />
+      <textarea name="description" placeholder="Short description" required></textarea>
+      <button type="submit" class="primary-btn">Add Product</button>
+    </form>
+    <h3>Current Products</h3>
+    <ul id="adminProductList" class="admin-product-list"></ul>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
