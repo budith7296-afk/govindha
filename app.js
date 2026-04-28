@@ -1,30 +1,31 @@
 const defaultProducts = [
   {
     id: crypto.randomUUID(),
-    name: "iPhone 15",
-    price: 73999,
-    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600",
-    description: "Apple flagship with A16 chip and dynamic camera features.",
+    name: "Hyderabadi Chicken Biryani",
+    price: 349,
+    image: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=600",
+    description: "Classic dum biryani with aromatic basmati and spicy chicken pieces.",
   },
   {
     id: crypto.randomUUID(),
-    name: "Samsung Galaxy S24",
-    price: 68999,
-    image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600",
-    description: "Premium Android phone with bright display and AI tools.",
+    name: "Mutton Special Biryani",
+    price: 429,
+    image: "https://images.unsplash.com/photo-1701579231340-3ecf843f38c7?w=600",
+    description: "Slow-cooked mutton layered with saffron rice and house masala.",
   },
   {
     id: crypto.randomUUID(),
-    name: "OnePlus 12R",
-    price: 41999,
-    image: "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=600",
-    description: "Fast performance and clean software experience.",
+    name: "Family Combo",
+    price: 699,
+    image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?w=600",
+    description: "2 biryanis, kebabs, raita, and double ka meetha for 4 people.",
   },
 ];
 
 const state = {
-  products: JSON.parse(localStorage.getItem("gm_products")) || defaultProducts,
+  products: JSON.parse(localStorage.getItem("bf_products")) || defaultProducts,
   cart: [],
+  trackingTimer: null,
 };
 
 const productGrid = document.getElementById("productGrid");
@@ -37,9 +38,12 @@ const adminProductList = document.getElementById("adminProductList");
 const adminPanel = document.getElementById("adminPanel");
 const adminToggle = document.getElementById("adminToggle");
 const searchInput = document.getElementById("searchInput");
+const riderDot = document.getElementById("riderDot");
+const trackingStatus = document.getElementById("trackingStatus");
+const statusSteps = Array.from(document.querySelectorAll("#statusSteps span"));
 
 function saveProducts() {
-  localStorage.setItem("gm_products", JSON.stringify(state.products));
+  localStorage.setItem("bf_products", JSON.stringify(state.products));
 }
 
 function renderProducts(filter = "") {
@@ -137,6 +141,42 @@ function renderAdminProducts() {
   });
 }
 
+function startTracking(orderId) {
+  const steps = [
+    "Confirmed",
+    "Cooking",
+    "Picked Up",
+    "On the Way",
+    "Delivered",
+  ];
+
+  if (state.trackingTimer) {
+    clearInterval(state.trackingTimer);
+  }
+
+  let stepIndex = 0;
+  trackingStatus.textContent = `Order ${orderId}: ${steps[stepIndex]}`;
+  statusSteps.forEach((step, index) => {
+    step.classList.toggle("active", index === stepIndex);
+  });
+  riderDot.style.left = "0%";
+
+  state.trackingTimer = setInterval(() => {
+    stepIndex += 1;
+    if (stepIndex >= steps.length) {
+      clearInterval(state.trackingTimer);
+      return;
+    }
+
+    const progress = (stepIndex / (steps.length - 1)) * 100;
+    riderDot.style.left = `${progress}%`;
+    trackingStatus.textContent = `Order ${orderId}: ${steps[stepIndex]}`;
+    statusSteps.forEach((step, index) => {
+      step.classList.toggle("active", index <= stepIndex);
+    });
+  }, 2500);
+}
+
 checkoutForm.addEventListener("submit", (event) => {
   event.preventDefault();
   if (state.cart.length === 0) {
@@ -146,9 +186,8 @@ checkoutForm.addEventListener("submit", (event) => {
 
   const formData = new FormData(checkoutForm);
   const order = {
-    id: `ORD-${Date.now()}`,
+    id: `BF-${Date.now()}`,
     customerName: formData.get("customerName"),
-    email: formData.get("email"),
     phone: formData.get("phone"),
     address: formData.get("address"),
     paymentMethod: formData.get("paymentMethod"),
@@ -157,14 +196,15 @@ checkoutForm.addEventListener("submit", (event) => {
     createdAt: new Date().toISOString(),
   };
 
-  const orders = JSON.parse(localStorage.getItem("gm_orders")) || [];
+  const orders = JSON.parse(localStorage.getItem("bf_orders")) || [];
   orders.push(order);
-  localStorage.setItem("gm_orders", JSON.stringify(orders));
+  localStorage.setItem("bf_orders", JSON.stringify(orders));
 
-  checkoutMessage.textContent = `Order placed! ID: ${order.id}`;
+  checkoutMessage.textContent = `Order placed! Track ID: ${order.id}`;
   checkoutForm.reset();
   state.cart = [];
   renderCart();
+  startTracking(order.id);
 });
 
 productForm.addEventListener("submit", (event) => {

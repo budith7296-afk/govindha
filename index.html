@@ -3,37 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ganeshab Mobies | Store</title>
+  <title>BiryaniFactory | Phase 1 UI</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div>
-      <h1>Ganeshab Mobies</h1>
-      <p>Mobiles, accessories, and trusted service.</p>
+      <h1>BiryaniFactory</h1>
+      <p>Hot biryani, fast delivery, live order updates.</p>
     </div>
-    <button id="adminToggle" class="secondary-btn">Admin Panel</button>
+    <button id="adminToggle" class="secondary-btn">Admin Menu Panel</button>
   </header>
 
   <main>
     <section class="catalog-section">
       <div class="section-title-row">
-        <h2>Shop Products</h2>
-        <input id="searchInput" type="search" placeholder="Search products..." />
+        <h2>Menu</h2>
+        <input id="searchInput" type="search" placeholder="Search biryani or combos..." />
       </div>
       <div id="productGrid" class="product-grid"></div>
     </section>
 
     <aside class="cart-section">
-      <h2>Cart</h2>
+      <h2>Your Cart</h2>
       <ul id="cartItems" class="cart-items"></ul>
       <p class="total">Total: ₹<span id="cartTotal">0</span></p>
 
       <h3>Checkout</h3>
       <form id="checkoutForm" class="checkout-form">
         <input name="customerName" placeholder="Full name" required />
-        <input name="email" type="email" placeholder="Email" required />
-        <input name="phone" placeholder="Phone" required />
+        <input name="phone" placeholder="Phone number" required />
         <textarea name="address" placeholder="Delivery address" required></textarea>
         <select name="paymentMethod" required>
           <option value="">Payment method</option>
@@ -47,16 +46,44 @@
     </aside>
   </main>
 
+  <section class="tracking-section">
+    <h2>Live Tracking (Phase 1 UI)</h2>
+    <p>Mock realtime tracker with map-style view and rider progress updates.</p>
+    <div class="tracking-grid">
+      <div class="map-card">
+        <div class="map-head">
+          <span>Restaurant</span>
+          <span>📍</span>
+          <span>Your Location</span>
+        </div>
+        <div class="map-track" id="mapTrack">
+          <div class="rider-dot" id="riderDot" aria-label="Delivery rider position"></div>
+        </div>
+      </div>
+      <div class="status-card">
+        <h3>Order Status</h3>
+        <p id="trackingStatus">Waiting for order placement...</p>
+        <div class="status-steps" id="statusSteps">
+          <span>1. Confirmed</span>
+          <span>2. Cooking</span>
+          <span>3. Picked Up</span>
+          <span>4. On the Way</span>
+          <span>5. Delivered</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="adminPanel" class="admin-panel hidden">
-    <h2>Admin - Manage Products</h2>
+    <h2>Admin - Manage Menu</h2>
     <form id="productForm" class="admin-form">
-      <input name="name" placeholder="Product name" required />
+      <input name="name" placeholder="Dish name" required />
       <input name="price" type="number" min="1" placeholder="Price" required />
       <input name="image" placeholder="Image URL" required />
       <textarea name="description" placeholder="Short description" required></textarea>
-      <button type="submit" class="primary-btn">Add Product</button>
+      <button type="submit" class="primary-btn">Add Dish</button>
     </form>
-    <h3>Current Products</h3>
+    <h3>Current Menu</h3>
     <ul id="adminProductList" class="admin-product-list"></ul>
   </section>
 

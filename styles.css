@@ -1,11 +1,11 @@
 :root {
-  --bg: #f6f8fb;
+  --bg: #fffaf3;
   --card: #ffffff;
-  --text: #1c2333;
-  --primary: #2156f4;
-  --primary-dark: #1438ad;
-  --secondary: #f2f5ff;
-  --border: #dbe3ff;
+  --text: #1e1e1e;
+  --primary: #c64212;
+  --primary-dark: #94300c;
+  --secondary: #ffefe8;
+  --border: #ffd8c9;
   --danger: #d93025;
 }
 
@@ -13,7 +13,7 @@
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Inter, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
 }
@@ -35,11 +35,15 @@ main {
   padding: 1rem 2rem;
 }
 
-.catalog-section, .cart-section, .admin-panel {
+.catalog-section, .cart-section, .admin-panel, .tracking-section {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 0.75rem;
   padding: 1rem;
+}
+
+.tracking-section {
+  margin: 0 2rem 1rem;
 }
 
 .section-title-row {
@@ -131,6 +135,57 @@ input, textarea, select {
   color: var(--danger);
 }
 
+.tracking-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1rem;
+}
+
+.map-card,
+.status-card {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.map-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+}
+
+.map-track {
+  position: relative;
+  height: 80px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f7cab5, #ffdcb6, #ffeac4);
+  overflow: hidden;
+}
+
+.rider-dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2d6a4f;
+  box-shadow: 0 0 0 6px rgb(45 106 79 / 20%);
+  transition: left 0.5s ease;
+}
+
+.status-steps {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.status-steps .active {
+  color: #2d6a4f;
+  font-weight: 700;
+}
+
 @media (max-width: 900px) {
   main {
     grid-template-columns: 1fr;
@@ -141,5 +196,13 @@ input, textarea, select {
     padding: 1rem;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .tracking-section {
+    margin: 0 1rem 1rem;
+  }
+
+  .tracking-grid {
+    grid-template-columns: 1fr;
   }
 }
